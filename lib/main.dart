@@ -38,12 +38,14 @@ class ATMPage extends StatelessWidget {
         if (state is WithdrawalError) {
           final String message = switch (state.reason) {
             WithdrawalErrorReason.insufficientFunds => 'Insufficient funds',
-            WithdrawalErrorReason.cannotWithdrawAmount => 'Invalid amount',
+            WithdrawalErrorReason.cannotWithdrawAmount =>
+              'Invalid amount. Available banknotes: ${state.availableBanknotes.entries.map((banknote) => '${banknote.value} x ${banknote.key} PLN').join(', ')}',
           };
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(message),
               backgroundColor: Theme.of(context).colorScheme.error,
+              duration: const Duration(seconds: 5),
             ),
           );
         } else if (state is WithdrawalSuccess) {
