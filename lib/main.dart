@@ -1,4 +1,5 @@
 import 'package:atm_simulator/manager/atm_cubit.dart';
+import 'package:atm_simulator/widgets/withdrawal_success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -51,35 +52,8 @@ class ATMPage extends StatelessWidget {
         } else if (state is WithdrawalSuccess) {
           showDialog(
             context: context,
-            builder: (_) => AlertDialog(
-              title: const Text('Withdrawal successful'),
-              content: RichText(
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  children: [
-                    const TextSpan(text: 'You have withdrawn\n'),
-                    TextSpan(
-                      text: state.withdrawal.entries
-                          .map((banknote) =>
-                              '- ${banknote.value} x ${banknote.key} PLN')
-                          .join('\n'),
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    const TextSpan(text: '\nfrom your account'),
-                  ],
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            ),
+            builder: (_) =>
+                WithdrawalSuccessDialog(withdrawal: state.withdrawal),
           ).then((_) => _textEditingController.clear());
         }
       },
