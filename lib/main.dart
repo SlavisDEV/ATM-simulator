@@ -56,15 +56,16 @@ class ATMPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyMedium,
                   children: [
                     const TextSpan(text: 'You have withdrawn\n'),
-                    ...state.withdrawal.entries.map(
-                      (banknote) => TextSpan(
-                        text: '- ${banknote.value} x ${banknote.key} PLN\n',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
+                    TextSpan(
+                      text: state.withdrawal.entries
+                          .map((banknote) =>
+                              '- ${banknote.value} x ${banknote.key} PLN')
+                          .join('\n'),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
-                    const TextSpan(text: 'from your account'),
+                    const TextSpan(text: '\nfrom your account'),
                   ],
                 ),
               ),
