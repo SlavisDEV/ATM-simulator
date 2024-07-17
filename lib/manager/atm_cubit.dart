@@ -41,8 +41,10 @@ class AtmCubit extends Cubit<AtmState> {
         final availableBanknotesToWithdraw = banknotesToWithdraw > banknoteCount
             ? banknoteCount
             : banknotesToWithdraw;
-        toWithdraw[banknote] = availableBanknotesToWithdraw;
-        leftAmount -= banknote * availableBanknotesToWithdraw;
+        if (availableBanknotesToWithdraw > 0) {
+          toWithdraw[banknote] = availableBanknotesToWithdraw;
+          leftAmount -= banknote * availableBanknotesToWithdraw;
+        }
       }
     }
 
